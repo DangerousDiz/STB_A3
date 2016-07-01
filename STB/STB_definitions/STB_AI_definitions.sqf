@@ -608,6 +608,7 @@ _FIA_O_StaticWeapons = 	[	_FIA_O_Static_Mortar,
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 							3CB BAF Units (Army)
 							  (faction #: 6)
+Required: @3cb_baf_equipment, @3cb_baf_units, @3cb_baf_vehicles, @3cb_baf_weapons
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */								
    
 // infantry groups
@@ -705,6 +706,7 @@ _3CB_BAF_StaticWeapons	 = 	[	_3CB_BAF_Static_Mortar,
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 							RHS Russian Units
 							(faction #: 7)
+Required: @rhs_afrf3
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */								
    
 // infantry groups
@@ -802,6 +804,7 @@ _RHS_RUS_StaticWeapons	 = 	[	_RHS_RUS_Static_Mortar,
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 							MAS African Gov (Ind) Units
 							(faction #: 8)
+Required: @african_conflict
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */								
 
 // infantry groups
@@ -899,6 +902,7 @@ _MAS_IND_StaticWeapons	 = 	[	_MAS_IND_Static_Mortar,
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 							MAS African Rebel, Foreign & Armed Civ (Opf) Units
 							(faction #: 9)
+Required: @african_conflict
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */								
 
 // infantry groups
@@ -996,6 +1000,7 @@ _MAS_OPF_StaticWeapons	 = 	[	_MAS_OPF_Static_Mortar,
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 							MAS African Armed Civ (CIV) Units
 							(faction #: 10)
+Required: @african_conflict
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */								
 
 // infantry groups
