@@ -64,7 +64,7 @@ DDZ_fnc_ancillary_findPlayer = {
 	_targetPos = [];
 	_validTarg = if(!isNull _this) then {
 		{
-			if(_x inArea _this)) then {
+			if(_x inArea _this) then {
 				_playerInAO pushBack _x;
 				true;
 			}else{

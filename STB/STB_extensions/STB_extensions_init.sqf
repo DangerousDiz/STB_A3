@@ -33,7 +33,9 @@
 
 */
 //Extensions Enabled by default
-STB_EnableExtensions = if (STB_EnableExtensions == 0) then {false} else {true};	
+STB_DebugEnabled = if ((paramsArray select 0) == 1) then {true} else {false};
+STB_EnableExtensions = if ((paramsArray select 1) == 0) then {false} else {true};	
+
 
 if(!STB_EnableExtensions) exitWith {systemchat format["[STB_Extensions: EXIT @ %1]: STB_Extensions not Enabled",time];};
 
