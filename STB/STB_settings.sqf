@@ -7,18 +7,19 @@
 	//STB_DebugEnabled = true; // STB debug mode
 	// UNCOMMENT FOR THIS OPTION TO APPEAR IN SERVER PARAMS
 	// (must also be changed in description.ext)
-	STB_DebugEnabled = if (paramsArray select 0 == 1) then {true} else {false};	
+	STB_DebugEnabled = if (STB_DebugEnabled == 1) then {true} else {false};	
+	//Updated to auto set in STB_init.sqf - line 11 - 13
 	
-	STB_MaxAI = 100; // maximum AI - if ai count is beyond this number, no more units will spawn from the spawn scripts
+	STB_MaxAI = 200; // maximum AI - if ai count is beyond this number, no more units will spawn from the spawn scripts
 	STB_NoAI = false; // only set to true if you do not intend on using AI spawning functions (e.g. for TvT) - saves some memory
 	
 	// Overide to cancel group marking for cTab use
-	DDZ_STB_cancelGroupMkrs = true;
+	STB_cancelGroupMkrs = true;
 	// spawned ai will have these skills
 	STB_AISkillArray = [	["spotdistance", 	0.8],
 							["aimingaccuracy", 	0.2],
 							["aimingshake", 	0.2],
-							["aimingspeed", 	0.2],
+							["aimingspeed", 	0.6],
 							["endurance", 		0.5],
 							["spottime", 		0.6],
 							["courage", 		0.9],

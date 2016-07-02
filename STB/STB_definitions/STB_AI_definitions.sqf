@@ -996,105 +996,7 @@ _MAS_OPF_StaticWeapons	 = 	[	_MAS_OPF_Static_Mortar,
 							_MAS_OPF_Static_GMG,
 							_MAS_OPF_Static_AT,
 							_MAS_OPF_Static_AA
-						];			
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-							MAS African Armed Civ (CIV) Units
-							(faction #: 10)
-Required: @african_conflict
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */								
-
-// infantry groups
-_MAS_CIV_Men_riflesquad	=	["O_mas_afr_Rebel6a_F","O_mas_afr_Rebel1_F"];
-_MAS_CIV_Men_weaponsSquad	=	["O_mas_afr_Rebel5_F","O_mas_afr_Rebel6_F","O_mas_afr_Rebel5_F"];
-_MAS_CIV_Men_fireTeam		=	["C_mas_afr_7","O_mas_afr_Rebel5_F","C_mas_afr_doc","O_mas_afr_Rebel6_F","O_mas_afr_Rebel4_F","O_mas_afr_Rebel3_F"];
-_MAS_CIV_Men_at			=	["O_mas_afr_Rebel8a_F","O_mas_afr_Rebel6_F","O_mas_afr_Rebel6_F","O_mas_afr_Rebel6_F"];
-_MAS_CIV_Men_aa			=	["O_mas_afr_Rebel8a_F","O_mas_afr_Rebel6a_F","O_mas_afr_Rebel2_F","O_mas_afr_Rebel2_F","O_mas_afr_Rebel6a_F"];
-_MAS_CIV_Men_sentry		=	["C_mas_afr_3","C_mas_afr_6","O_mas_afr_Rebel8a_F","O_mas_afr_Rebel3_F","O_mas_afr_Rebel5_F"];
-_MAS_CIV_Men_sniperTeam	=	["O_mas_afr_Rebel7_F","O_mas_afr_Rebel7_F"];
-_MAS_CIV_Men_mortarTeam	=	["C_mas_afr_1","C_mas_afr_2","O_mas_afr_Rebel3_F","O_mas_afr_Rebel6a_F","O_mas_afr_Rebel2_F","O_mas_afr_Rebel6_F"];
-
-// motorized groups
-_MAS_CIV_Moto_section		=	[];
-_MAS_CIV_Moto_fireteam		=	[];
-_MAS_CIV_Moto_at			=	[];
-_MAS_CIV_Moto_aa			=	[];
-_MAS_CIV_Moto_hmg			=	[];
-_MAS_CIV_Moto_gmg			=	[];
-_MAS_CIV_Moto_mortar		=	[];
-
-// mechaniszed groups
-_MAS_CIV_Mech_riflesquad	=	[];
-_MAS_CIV_Mech_at			=	[];
-_MAS_CIV_Mech_aa			=	[];
-_MAS_CIV_Mech_support		=	[];
-
-// ground vehicles
-_MAS_CIV_UnarmedVehicles 		= 	[];
-_MAS_CIV_ArmedVehicles_Light 	= 	[];
-_MAS_CIV_ArmedVehicles_Medium 	=	[];
-_MAS_CIV_ArmedVehicles_Heavy 	=	[];
-
-// air vehicles
-_MAS_CIV_RW_Transport = 	[];
-_MAS_CIV_RW_CAS 		= 	[];
-_MAS_CIV_FW_CAS 		= 	[];
-
-// static weapons
-_MAS_CIV_Static_Mortar 	= 	[];							
-_MAS_CIV_Static_HMG		= 	[];
-_MAS_CIV_Static_GMG		=	[];
-_MAS_CIV_Static_AT		= 	[];
-_MAS_CIV_Static_AA		=	[];
-
-// consolidate infantry groups
-_MAS_CIV_Infantry = [	_MAS_CIV_Men_riflesquad,
-					_MAS_CIV_Men_weaponsSquad,
-					_MAS_CIV_Men_fireTeam,
-					_MAS_CIV_Men_at,
-					_MAS_CIV_Men_aa,
-					_MAS_CIV_Men_sentry,
-					_MAS_CIV_Men_sniperTeam,
-					_MAS_CIV_Men_mortarTeam
-				];
-				
-// consolidate motorised groups				
-_MAS_CIV_Motorized = [_MAS_CIV_Moto_section,
-					_MAS_CIV_Moto_fireteam,
-					_MAS_CIV_Moto_at,
-					_MAS_CIV_Moto_aa,
-					_MAS_CIV_Moto_hmg,
-					_MAS_CIV_Moto_gmg,
-					_MAS_CIV_Moto_mortar
-				];
-
-// consolidate mechanized groups					
-_MAS_CIV_Mechanized = 	[	_MAS_CIV_Mech_riflesquad,
-						_MAS_CIV_Mech_at,
-						_MAS_CIV_Mech_aa,
-						_MAS_CIV_Mech_support
-					];	
-
-// consolidate ground vehicles					
-_MAS_CIV_GroundVehicles = 	[	_MAS_CIV_UnarmedVehicles,
-							_MAS_CIV_ArmedVehicles_Light,
-							_MAS_CIV_ArmedVehicles_Medium,
-							_MAS_CIV_ArmedVehicles_Heavy
 						];	
-						
-// consolidate air vehicles
-_MAS_CIV_AirVehicles = [	_MAS_CIV_RW_Transport,
-						_MAS_CIV_RW_CAS,
-						_MAS_CIV_FW_CAS
-					];
-
-// consolidate static weapons
-_MAS_CIV_StaticWeapons	 = 	[	_MAS_CIV_Static_Mortar,
-							_MAS_CIV_Static_HMG,
-							_MAS_CIV_Static_GMG,
-							_MAS_CIV_Static_AT,
-							_MAS_CIV_Static_AA
-						];			
-
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 					CONSOLIDATE ALL GROUPS					
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -1108,8 +1010,7 @@ STB_Infantry = 		[	[_NATO_Infantry, west],
 						[_3CB_BAF_Infantry, west],
 						[_RHS_RUS_Infantry, east],
 						[_MAS_IND_Infantry, resistance],
-						[_MAS_OPF_Infantry, east],
-						[_MAS_CIV_Infantry, civilian]
+						[_MAS_OPF_Infantry, east]
 					];
 				
 STB_Motorized = 	[	[_NATO_Motorized, west],
@@ -1121,8 +1022,7 @@ STB_Motorized = 	[	[_NATO_Motorized, west],
 						[_3CB_BAF_Motorized, west],
 						[_RHS_RUS_Motorized, east],
 						[_MAS_IND_Motorized, resistance],
-						[_MAS_OPF_Motorized, east],
-						[_MAS_CIV_Motorized, civilian]
+						[_MAS_OPF_Motorized, east]
 					];	
 				
 STB_Mechanized = 	[	[_NATO_Mechanized, west],
@@ -1134,8 +1034,7 @@ STB_Mechanized = 	[	[_NATO_Mechanized, west],
 						[_3CB_BAF_Mechanized, west],
 						[_RHS_RUS_Mechanized, east],
 						[_MAS_IND_Mechanized, resistance],
-						[_MAS_OPF_Mechanized, east],
-						[_MAS_CIV_Mechanized, civilian]	
+						[_MAS_OPF_Mechanized, east]
 					];
 				
 STB_GroundVehicles = [	[_NATO_GroundVehicles, west],
@@ -1147,8 +1046,7 @@ STB_GroundVehicles = [	[_NATO_GroundVehicles, west],
 						[_3CB_BAF_GroundVehicles, west],
 						[_RHS_RUS_GroundVehicles, east],
 						[_MAS_IND_GroundVehicles, resistance],
-						[_MAS_OPF_GroundVehicles, east],
-						[_MAS_CIV_GroundVehicles, civilian]
+						[_MAS_OPF_GroundVehicles, east]
 					];
 					
 STB_AirVehicles =	[	[_NATO_AirVehicles, west],
@@ -1160,8 +1058,7 @@ STB_AirVehicles =	[	[_NATO_AirVehicles, west],
 						[_3CB_BAF_AirVehicles, west],
 						[_RHS_RUS_AirVehicles, east],
 						[_MAS_IND_AirVehicles, resistance],
-						[_MAS_OPF_AirVehicles, east],
-						[_MAS_CIV_AirVehicles, civilian]
+						[_MAS_OPF_AirVehicles, east]
 					];
 				
 STB_StaticWeapons = [	[_NATO_StaticWeapons, west],
@@ -1173,7 +1070,6 @@ STB_StaticWeapons = [	[_NATO_StaticWeapons, west],
 						[_3CB_BAF_StaticWeapons, west],
 						[_RHS_RUS_StaticWeapons, east],
 						[_MAS_IND_StaticWeapons, resistance],
-						[_MAS_OPF_StaticWeapons, east],
-						[_MAS_CIV_StaticWeapons, civilian]
+						[_MAS_OPF_StaticWeapons, east]
 					];
 				

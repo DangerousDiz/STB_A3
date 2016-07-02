@@ -3,7 +3,9 @@
 	********************		DEBUG FUNCTIONS		************************
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
+//Condition call for the server admin
+STB_fnc_debug_isServerAdmin = {serverCommandAvailable "#logout"};
+	
 // switch captive
 STB_fnc_debug_toggleCaptive = 
 {

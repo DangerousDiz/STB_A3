@@ -192,7 +192,7 @@ STB_fnc_intel_groupMarkers =
 	*/
 	
 	// check if client
-	if (!hasInterface || DDZ_STB_cancelGroupMkrs) exitWith {};
+	if (!hasInterface || STB_cancelGroupMkrs) exitWith {};
 	
 	// if respawn delete all markers
 	if (!isNil "STB_LocalGroupMarkers") then {

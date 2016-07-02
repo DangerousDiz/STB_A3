@@ -8,6 +8,10 @@
 	nul = execVM "STB\STB_init.sqf";	
 
 */
+//Get Server params from description.ext
+{
+   missionNamespace setVariable [configName _x, paramsArray select _forEachIndex];
+} forEach ("true" configClasses (missionConfigFile >> "Params"));
 
 // compile user settings
 call compile preProcessFileLineNumbers "STB\STB_settings.sqf";	
@@ -24,6 +28,7 @@ if (serverCommandAvailable "#logout") then {
 	STB_ServerAdmin = player;
 	publicVariable "STB_ServerAdmin";
 };
+
 
 // define condition to identify the machine that will control the AI
 STB_isAIController = 	if ((!isMultiplayer) || (isNil STB_HC_Name)) then {
@@ -50,9 +55,10 @@ if (!STB_NoAI) then {call compile preprocessFileLineNumbers "STB\STB_functions\S
 // after this point, all STB functions are available to use
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-					DDZ Extentions functions (all clients)
+					STB Extensions (all clients)
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-call compile preprocessFileLineNumbers "STB\STB_functions\DDZ_STB_extentions.sqf";
+call compile preprocessFileLineNumbers "STB\STB_extensions\STB_extensions_init.sqf";
+
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 						client specific functions
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -81,5 +87,6 @@ if (STB_useTFAR) then {
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				 mission specific functions (all clients)
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
 
 STB_mission_script = [] execVM "STB\STB_mission_init.sqf";
