@@ -8,10 +8,9 @@
 	nul = execVM "STB\STB_init.sqf";	
 
 */
-//Get Server params from description.ext
 {
    missionNamespace setVariable [configName _x, paramsArray select _forEachIndex];
-} forEach ("true" configClasses (missionConfigFile >> "Params"));
+} forEach ("true" configClasses (getMissionConfig "Params"));
 
 // compile user settings
 call compile preProcessFileLineNumbers "STB\STB_settings.sqf";	

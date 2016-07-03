@@ -4,11 +4,52 @@
 
 // General Settings
   
-	//STB_DebugEnabled = true; // STB debug mode
+	
+
+	/*
+	Add to bottom of description.ext - Note classname changes
+	If the Params class already exists in the description.ext just add these into it at the bottom.
+	// Params	
+		class Params
+		{
+			class STB_DebugEnabled
+			{
+				title = "STB Debug Enabled?"; 
+				values[] = {0,1}; 
+				texts[] = {"False","True"}; 
+				default = 0; 
+			};
+			class STB_EnableExtensions
+			{
+				title = "STB Extensions Enabled"; 
+				values[] = {0,1}; 
+				texts[] = {"False","True"}; 
+				default = 1; 
+			};	
+			
+		};
+	*/
 	// UNCOMMENT FOR THIS OPTION TO APPEAR IN SERVER PARAMS
 	// (must also be changed in description.ext)
-	STB_DebugEnabled = if (STB_DebugEnabled == 1) then {true} else {false};	
-	//Updated to auto set in STB_init.sqf - line 11 - 13
+	
+	//Check if STB_DebugEnabled is set in description.ext
+	if(typeName (missionNamespace getVariable ["STB_DebugEnabled",false]) == "SCALAR") then {
+		//Convert the params to Boolean - Allows multiple params array entries and reordering without losing the STB values
+		STB_DebugEnabled = if (STB_DebugEnabled == 0) then {false} else {true};
+		
+	}else{
+		STB_DebugEnabled = false;
+		systemChat format["[STB - Error @ %1]: Missing Params for STB_DebugEnabled - Default values set."];
+	};
+	//Check if STB_EnableExtensions is set in description.ext
+	if(typeName (missionNamespace getVariable ["STB_EnableExtensions",false]) == "SCALAR") then {
+		STB_EnableExtensions = if (STB_EnableExtensions == 0) then {false} else {true};
+	}else{
+		STB_EnableExtensions = false;
+		systemChat format["[STB - Error @ %1]: Missing Params for STB_EnableExtensions - Default values set."];
+	};
+	//systemchat format["Debug -> %1 - Extensions -> %2 ",STB_DebugEnabled,STB_EnableExtensions];
+	//STB_DebugEnabled = true; // STB debug mode overide
 	
 	STB_MaxAI = 200; // maximum AI - if ai count is beyond this number, no more units will spawn from the spawn scripts
 	STB_NoAI = false; // only set to true if you do not intend on using AI spawning functions (e.g. for TvT) - saves some memory

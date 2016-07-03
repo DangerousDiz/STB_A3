@@ -640,7 +640,7 @@ _3CB_BAF_Mech_support		=	["UK3CB_BAF_Coyote_Passenger_L134A1_W","UK3CB_BAF_Medic
 _3CB_BAF_UnarmedVehicles 		= 	["UK3CB_BAF_Jackal2_GMG_W","UK3CB_BAF_Jackal2_GMG_W","UK3CB_BAF_Jackal2_GMG_W"];
 _3CB_BAF_ArmedVehicles_Light 	= 	["UK3CB_BAF_Jackal2_GMG_W","UK3CB_BAF_Jackal2_L2A1_W"];
 _3CB_BAF_ArmedVehicles_Medium 	=	["UK3CB_BAF_Coyote_Logistics_L134A1_W"];
-_3CB_BAF_ArmedVehicles_Heavy 	=	["UK3CB_BAF_Coyote_Passenger_L134A1_D","UK3CB_BAF_Coyote_Passenger_L134A1_W","UK3CB_BAF_Coyote_Passenger_L111A1_D","UK3CB_BAF_Coyote_Passenger_L111A1_W"];
+_3CB_BAF_ArmedVehicles_Heavy 	=	["UK3CB_BAF_Coyote_Passenger_L134A1_W","UK3CB_BAF_Coyote_Passenger_L134A1_W","UK3CB_BAF_Coyote_Passenger_L111A1_W","UK3CB_BAF_Coyote_Passenger_L111A1_W"];
 
 // air vehicles
 _3CB_BAF_RW_Transport = 	["UK3CB_BAF_Merlin_RAF_ZJ124","UK3CB_BAF_Wildcat_Transport_RN_ZZ396"];

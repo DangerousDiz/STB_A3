@@ -31,10 +31,7 @@
 */
 
 if (true) then {
-	
-	attack = true;
-	consulate = true;
-	CommandMonitorAccess = true;
+
 };
 
 if (hasInterface) then {
@@ -44,19 +41,17 @@ if (hasInterface) then {
 	
 	waitUntil{!isNull player};
 	waitUntil{player == player};
+	/*
 	execVM "Scripts\3cb\medicalFix.sqf";
 	execVM "Scripts\3cb\Ctab.sqf";
-	
+	*/
+	//Removes adverse effects of killing civilians
+	player addRating 99999;
 	/*
 		Client side loops and actions / events
 	*/
-	player addRating 99999;
-	//player addAction ["<t color='#ffff00'>Spectator Mode</t>", "Scripts\spectator.sqf", [], 30, true, true, "", "_this in list spectatorTrigger"];	
-	//player addAction ["<t color='#ffff00'>Spectator Mode</t>", "[1,'cTab_Tablet_dlg',player,vehicle player] call cTab_fnc_open", [], 30, true, true, "", "_this in list spectatorTrigger"];	
 	
-	ControlMonitor_1 addAction ["<t color='#ffff00'>Access Command Tablet</t>", "[1,'cTab_Tablet_dlg',player,vehicle player] call cTab_fnc_open", [], 5, true, true, "", "CommandMonitorAccess"];
-	ControlMonitor_2 addAction ["<t color='#ffff00'>Access Command Tablet</t>", "[1,'cTab_Tablet_dlg',player,vehicle player] call cTab_fnc_open", [], 5, true, true, "", "CommandMonitorAccess"];
-	ControlMonitor_3 addAction ["<t color='#ffff00'>Access Command Tablet</t>", "[1,'cTab_Tablet_dlg',player,vehicle player] call cTab_fnc_open", [], 5, true, true, "", "CommandMonitorAccess"];
+	
 };
 
 if (isServer) then {
@@ -64,7 +59,7 @@ if (isServer) then {
 	// CODE TO BE EXECUTED ON THE SERVER
 	// e.g. triggers for monitoring mission objectives and progress	
 	//Clean Up...
-	[
+	/*[
 		10*60, // seconds to delete dead bodies (0 means don't delete) 
 		10*60, // seconds to delete dead vehicles (0 means don't delete)
 		0, // seconds to delete immobile vehicles (0 means don't delete)
@@ -72,7 +67,7 @@ if (isServer) then {
 		0, // seconds to deleted planted explosives (0 means don't delete)
 		0 // seconds to delete dropped smokes/chemlights (0 means don't delete)
 	] execVM 'Scripts\repCleanUp.sqf';		
-	
+	*/
 };
 
 if (STB_isAIController) then {
@@ -83,60 +78,9 @@ if (STB_isAIController) then {
 	// e.g. AI spawn scripts
 	/*
 		AI Spawn:
-	*/	
+	*/
 	
-	attackDelay = if (STB_DebugEnabled) then {1} else {14};
-	smokeDelay = if (STB_DebugEnabled) then {1} else {45};
 	
-	fnc_deleteSmoke = {				
-		{
-			deleteVehicle _x;
-		} forEach (_this getVariable ["effects", []]);
-		if (isServer) then {
-			deleteVehicle _this;
-		};
-	};
-	
-	[] spawn {
-	
-		_garMarkers = ["gar", 4] call STB_fnc_ancillary_defineMarkers;
-		_infantryMarkers = ["inf", 18] call STB_fnc_ancillary_defineMarkers;
-		
-		sleep (attackDelay*60);		
-		[9,"infantry","fireteam",_garMarkers,100,"garrison",[10]] spawn STB_fnc_AI_spawnAI;
-		while {attack} do {	
-			[9,"infantry","section",_infantryMarkers,50,"sad",["tgt",10]] spawn STB_fnc_AI_spawnAI;
-			sleep 300;
-		};		
-	
-	};
-
-	[] spawn {
-		
-		sleep (smokeDelay * 60); 		
-		
-		_sm0 = createVehicle ["test_EmptyObjectForFireBig", getMarkerPos "smoke_1", [], 0, "CAN_COLLIDE"];
-		_sm1 = createVehicle ["test_EmptyObjectForSmoke", getMarkerPos "smoke_1", [], 0, "CAN_COLLIDE"];
-		
-		sleep 10;
-		STB_MaxAI = 100;
-		//Delete the fire and smoke
-		sleep ((smokeDelay * 60)/2);
-		{
-			_fireObj = _x;
-			_effectsArray = (_fireObj getVariable "effects");
-			
-			{
-				deleteVehicle _x;
-			} forEach _effectsArray;
-			
-			deleteVehicle _fireObj;
-			sleep 30;
-		
-		} forEach [_sm0,_sm1];
-		
-	};
-		
 	
 };
 

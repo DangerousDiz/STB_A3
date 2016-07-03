@@ -103,19 +103,17 @@ DDZ_action_exitIntoChute = {
 		unassignVehicle _JumpingUnit;
 		moveout _JumpingUnit;
 	};
-	[ {
-		if(((getPosATL (_this select 0)) select 2) > 10) then {
-			_chute = createVehicle ['Steerable_Parachute_F', position _this, [], 0, 'FLY']; 
-			_chute disableCollisionWith (_this select 1);
-			_chute setPos position (_this select 0);
-			(_this select 0) moveIndriver _chute;
-		
-		
-		
-		};
-		
+	sleep 3;
+	if(((getPosATL _JumpingUnit) select 2) > 3) then {
+		_chute = createVehicle ['Steerable_Parachute_F', position _JumpingUnit, [], 0, 'FLY']; 
+		_chute disableCollisionWith _vehTrans;
+		_chute setPos position _JumpingUnit;
+		_JumpingUnit moveIndriver _chute;
 	
-	}, [_JumpingUnit,_vehTrans], 3]call CBA_fnc_waitAndExecute;
+	
+	
+	};
+	true;
 
 };
 STB_action_exitIntoChute = DDZ_action_exitIntoChute;
@@ -137,7 +135,7 @@ STB_action_exitIntoChute = DDZ_action_exitIntoChute;
 				Bool: Force Flashlights
 			]
 		] spawn DDZ_fnc_AI_sad_logistics;
-		Example: [myTrigger, ["vehSpawn_1","vehSpawn_2"], ["vehDrop_1","vehDrop_2"], "O_G_Boat_Transport_01_F", 5, "allSpawn", ["fireteam",0,"fireteam",true]] spawn DDZ_fnc_STB_spawnWaveLogistics;
+		Example: [myTrigger, ["vehSpawn_1","vehSpawn_2"], ["vehDrop_1","vehDrop_2"], "O_G_Boat_Transport_01_F", 5, "allSpawn", ["fireteam",0,"fireteam",true]] spawn STB_fnc_AI_sad_logistics;
 		Notes: 
 			Spawn Marker array should be the same size as dropoff marker array.
 			If you spawn more troops than can fit in the vehicle they will just get left behind but still recieve sad waypoint when the vehicle unloads.
@@ -208,16 +206,17 @@ DDZ_fnc_AI_sad_logistics = {
 		if(!(_vehTrans isKindOf "Helicopter")) then {
 		
 			_vehSite = (_dropOffMkrs select _mkrIndex);
-			
-			_wp1 = (group _vehDriver) addWaypoint [(getMarkerPos _vehSite), 5];
-			_wp1 setWaypointType "TR UNLOAD";
+			hint (str _vehSite);
+			_wp1 = (group _vehDriver) addWaypoint [(getMarkerPos _vehSite), 1];
+			_wp1 setWaypointType "MOVE";
 			_wp1 setWaypointSpeed "FULL";
-			_wp1 setWaypointBehaviour "CARELESS";
-			_wp1 setWaypointStatements ["true", "_this setVariable ['GreenLight', true];" ];
+			_wp1 setWaypointBehaviour "AWARE";
+			_wp1 setWaypointStatements ["true", "" ];
 			// activate first move for pilot incase something stops 1st wp to be executed somehow
 			
 			_vehDriver doMove (getWPPos _wp1);
 			(group _vehDriver) setCurrentWaypoint _wp1;
+			_vehDriver disableAI "AUTOCOMBAT";
 
 			sleep 1;
 			
@@ -225,9 +224,11 @@ DDZ_fnc_AI_sad_logistics = {
 			{
 				(!alive _vehTrans) || (!alive (driver _vehTrans)) || ((_vehTrans distance (getMarkerPos _vehSite) < 150) && (speed _vehTrans < 2))
 			};
+			hint "Vehicle infantry dismounting";
 		}else{
 			_vehSite = (_dropOffMkrs select _mkrIndex);
-			_wp1 = (group _vehDriver) addWaypoint [(getMarkerPos _vehSite), 5];
+			hint (str _vehSite);
+			_wp1 = (group _vehDriver) addWaypoint [(getMarkerPos _vehSite), 1];
 			_wp1 setWaypointType "MOVE";
 			_wp1 setWaypointSpeed "NORMAL";
 			_wp1 setWaypointBehaviour "SAFE";
@@ -245,9 +246,9 @@ DDZ_fnc_AI_sad_logistics = {
 			{
 				(!alive _vehTrans) || (!alive (driver _vehTrans)) || (_vehTrans distance (getMarkerPos _vehSite) < 500)
 			};
-			
+			hint "heli infantry dismounting";
 		};
-		hint "heli infantry dismounting";
+		
 		
 		sleep 0.2;
 		{
@@ -262,7 +263,8 @@ DDZ_fnc_AI_sad_logistics = {
 				
 				//Run parajump script
 			{
-				_x call DDZ_action_exitIntoChute;
+				_x spawn DDZ_action_exitIntoChute;
+				sleep 3;
 			
 			} forEach (units _thisGroup);
 			_playerTarget = _activatedTrigger call DDZ_fnc_ancillary_findPlayer;

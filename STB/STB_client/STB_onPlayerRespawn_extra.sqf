@@ -10,10 +10,7 @@
 	
 	_this is the player unit who is respawning
 */
+/*
 execVM "Scripts\3cb\medicalFix.sqf";
 execVM "Scripts\3cb\Ctab.sqf";
-//player addAction ["<t color='#ffff00'>Spectator Mode</t>", "Scripts\spectator.sqf", [], 30, true, true, "", "_this in list spectatorTrigger"];	
-//player addAction ["<t color='#ffff00'>Spectator Mode</t>", "[1,'cTab_Tablet_dlg',player,vehicle player] call cTab_fnc_open", [], 30, true, true, "", "_this in list spectatorTrigger"];
-ControlMonitor_1 addAction ["<t color='#ffff00'>Access Command Tablet</t>", "[1,'cTab_Tablet_dlg',player,vehicle player] call cTab_fnc_open", [], 5, true, true, "", "CommandMonitorAccess"];
-ControlMonitor_2 addAction ["<t color='#ffff00'>Access Command Tablet</t>", "[1,'cTab_Tablet_dlg',player,vehicle player] call cTab_fnc_open", [], 5, true, true, "", "CommandMonitorAccess"];
-ControlMonitor_3 addAction ["<t color='#ffff00'>Access Command Tablet</t>", "[1,'cTab_Tablet_dlg',player,vehicle player] call cTab_fnc_open", [], 5, true, true, "", "CommandMonitorAccess"];
+*/

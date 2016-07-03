@@ -5,16 +5,14 @@
 	// Params	
 		class Params
 		{
-			class STB_DebugEnabledParam
+			class STB_DebugEnabled
 			{
 				title = "STB Debug Enabled?"; 
 				values[] = {0,1}; 
 				texts[] = {"False","True"}; 
 				default = 0; 
 			};
-			
-			//STB Extensions server option after debug param
-			class STB_EnableExtensionsParam
+			class STB_EnableExtensions
 			{
 				title = "STB Extensions Enabled"; 
 				values[] = {0,1}; 
@@ -32,9 +30,7 @@
 			Be defined below in the correct order of the original files, variables before functions that use variables etc..
 
 */
-//Extensions Enabled by default
-STB_DebugEnabled = if ((paramsArray select 0) == 1) then {true} else {false};
-STB_EnableExtensions = if ((paramsArray select 1) == 0) then {false} else {true};	
+
 
 
 if(!STB_EnableExtensions) exitWith {systemchat format["[STB_Extensions: EXIT @ %1]: STB_Extensions not Enabled",time];};

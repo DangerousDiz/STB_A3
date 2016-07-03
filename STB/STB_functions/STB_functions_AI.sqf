@@ -604,7 +604,7 @@ STB_fnc_AI_move =
 			_wp setWaypointStatements ["true", _next];
 		};
 		case "buildingsearch" : {
-			_next = " [this, 100, 200, " + (str _nextOrderMkr) + ", " + (str _nextOrderMkr) + ", 100, false, 'SAFE', 'YELLOW', 'LIMITED', 'FILE', 0, 25, 0, [true,100,25,5,1]] execVM 'STB\USPS.sqf';";
+			_next = " [this, 100, 200, " + (str _nextOrderMkr) + ", " + (str _nextOrderMkr) + ", 100, false, 'SAFE', 'YELLOW', 'LIMITED', 'FILE', 0, 25, 0, [true,100,25,5,1]] execVM 'STB\Scripts\USPS.sqf';";
 			_wp setWaypointStatements ["true", _next];
 		};
 		case "garrisonNearby" : {
@@ -918,7 +918,7 @@ STB_fnc_AI_sad =
 			_sadWP setWaypointStatements ["true", _next ];
 		};
 		case "buildingsearch" : {
-			_next = " [this, 100, 200, " + (str _nextOrderMkr) + ", " + (str _nextOrderMkr) + ", 100, false, 'SAFE', 'RED', 'LIMITED', 'FILE', 0, 30, 0, [true,100,50,5,1]] execVM 'STB\USPS.sqf';";
+			_next = " [this, 100, 200, " + (str _nextOrderMkr) + ", " + (str _nextOrderMkr) + ", 100, false, 'SAFE', 'RED', 'LIMITED', 'FILE', 0, 30, 0, [true,100,50,5,1]] execVM 'STB\Scripts\USPS.sqf';";
 			_sadWP setWaypointStatements ["true", _next];
 		};
 		case "fallbackpatrol250" : {
