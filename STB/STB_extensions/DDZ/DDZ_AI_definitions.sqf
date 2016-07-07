@@ -10,15 +10,9 @@
 							Description: Custom Faction for a mission, Civilian Units are grouped with East Units to create herded civilians and guards
 								Additional Groups of just East Units are used to simplify mission scripts.
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */	
-/*
-Change this value to the side you want the custom faction to be on, options are:-
-	east
-	west
-	resistance
-	civilian
-*/
 
-_side = civilian;
+
+
 //Dont delete any group definition variables just fill out what you'd like to use.
 
 // infantry groups
@@ -27,7 +21,7 @@ _Men_weaponsSquad	=	["O_mas_afr_Rebel5_F","O_mas_afr_Rebel6_F","O_mas_afr_Rebel5
 _Men_fireTeam		=	["C_mas_afr_7","O_mas_afr_Rebel5_F","C_mas_afr_doc","O_mas_afr_Rebel6_F","O_mas_afr_Rebel4_F","O_mas_afr_Rebel3_F"];
 _Men_at			=	["O_mas_afr_Rebel8a_F","O_mas_afr_Rebel6_F","O_mas_afr_Rebel6_F","O_mas_afr_Rebel6_F"];
 _Men_aa			=	["O_mas_afr_Rebel8a_F","O_mas_afr_Rebel6a_F","O_mas_afr_Rebel2_F","O_mas_afr_Rebel2_F","O_mas_afr_Rebel6a_F"];
-_Men_sentry		=	["C_mas_afr_3","C_mas_afr_6","O_mas_afr_Rebel8a_F","O_mas_afr_Rebel3_F","O_mas_afr_Rebel5_F"];
+_Men_sentry		=	["C_mas_afr_3","O_mas_afr_Rebel8a_F","C_mas_afr_6","O_mas_afr_Rebel3_F","O_mas_afr_Rebel5_F"];
 _Men_sniperTeam	=	["O_mas_afr_Rebel7_F","O_mas_afr_Rebel7_F"];
 _Men_mortarTeam	=	["C_mas_afr_1","C_mas_afr_2","O_mas_afr_Rebel3_F","O_mas_afr_Rebel6a_F","O_mas_afr_Rebel2_F","O_mas_afr_Rebel6_F"];
 
@@ -116,16 +110,22 @@ _StaticWeapons	 = 	[	_Static_Mortar,
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 					CONSOLIDATE ALL GROUPS					
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   
-STB_Infantry pushBack [_Infantry, _side];
+
+STB_Infantry pushBack [_Infantry, east];
 					
+STB_Motorized pushBack [_Motorized, east];
 				
-STB_Motorized pushBack [_Motorized, _side];
+STB_Mechanized pushBack [_Mechanized, east];
 				
-STB_Mechanized pushBack [_Mechanized, _side];
-				
-STB_GroundVehicles pushBack	[_GroundVehicles, _side];
+STB_GroundVehicles pushBack	[_GroundVehicles, east];
 					
-STB_AirVehicles pushBack [_AirVehicles, _side];
+STB_AirVehicles pushBack [_AirVehicles, east];
 				
-STB_StaticWeapons pushBack [_StaticWeapons, _side];
+STB_StaticWeapons pushBack [_StaticWeapons, east];
+/*
+Change the side to the side you want the custom faction to be on, options are:-
+	east
+	west
+	resistance
+	civilian
+*/

@@ -10,7 +10,5 @@
 	
 	_this is the player unit who is respawning
 */
-/*
 execVM "Scripts\3cb\medicalFix.sqf";
 execVM "Scripts\3cb\Ctab.sqf";
-*/

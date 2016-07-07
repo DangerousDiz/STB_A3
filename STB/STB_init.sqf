@@ -8,6 +8,10 @@
 	nul = execVM "STB\STB_init.sqf";	
 
 */
+//Use a forEach loop to set all the mission params into global variables - regardless of the order or amount of server params
+//Credit: Goodson
+//Just make sure you set the param class for the setting to the variable name you wish to create. See STB\STB_settings.sqf
+
 {
    missionNamespace setVariable [configName _x, paramsArray select _forEachIndex];
 } forEach ("true" configClasses (getMissionConfig "Params"));
@@ -40,7 +44,7 @@ STB_isAIController = 	if ((!isMultiplayer) || (isNil STB_HC_Name)) then {
 STB_HC_Connected = if (isMultiplayer && !isNil STB_HC_Name) then {true} else {false};
 
 // set version string
-STB_VersionString = "3.3 Beta";
+STB_VersionString = "3.5 Beta";
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			all STB functions are compiled on every connected machine

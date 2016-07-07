@@ -59,7 +59,8 @@ if (isServer) then {
 	// CODE TO BE EXECUTED ON THE SERVER
 	// e.g. triggers for monitoring mission objectives and progress	
 	//Clean Up...
-	/*[
+	/*
+	[
 		10*60, // seconds to delete dead bodies (0 means don't delete) 
 		10*60, // seconds to delete dead vehicles (0 means don't delete)
 		0, // seconds to delete immobile vehicles (0 means don't delete)

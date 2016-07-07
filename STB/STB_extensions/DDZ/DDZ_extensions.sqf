@@ -43,7 +43,6 @@ DDZ_fnc_AI_forceFlashlights =
 				_unit unassignItem "acc_pointer_IR";
 				_unit removePrimaryWeaponItem "acc_pointer_IR";
 				_unit addPrimaryWeaponItem "acc_flashlight";
-				_unit assignItem "acc_flashlight";
 				if (((getPos _x) select 2) < 10) then {_unit setBehaviour "SAFE"};
 				if("acc_flashlight" in (primaryWeaponItems _unit) ) then {_unit enableGunLights "ForceOn"};
 			};
@@ -166,7 +165,7 @@ DDZ_fnc_AI_sad_logistics = {
 							
 							
 							
-	if((triggerActivated _activatedTrigger) && ({side _x != west}count allUnits < (STB_maxAI - _WaveAdj))) then {
+	if((triggerActivated _activatedTrigger) && ({side _x != west}count allUnits < (STB_MaxAI - _WaveAdj))) then {
 		
 		if(!(({!(_x in playableUnits)} count allUnits) < (STB_MaxAI - _WaveAdj))) exitWith {};
 		sleep 30;
@@ -174,7 +173,7 @@ DDZ_fnc_AI_sad_logistics = {
 		_vehTrans = objNull;
 		if(_vehicleClass isKindOf "Helicopter") then {
 			_vehTrans = createVehicle [_vehicleClass, [(getMarkerPos (_spawnMkrs select _mkrIndex))select 0, (getMarkerPos (_spawnMkrs select _mkrIndex))select 1, 300],[] , 0, "FLY"];
-			(units (group _vehTrans)) call DDZ_fnc_AI_forceFlashlights;
+			//(units (group _vehTrans)) spawn DDZ_fnc_AI_forceFlashlights;
 			
 		}else{
 			_vehTrans = createVehicle [_vehicleClass, (getMarkerPos (_spawnMkrs select _mkrIndex)),[] , 0, "NONE"];
@@ -194,7 +193,7 @@ DDZ_fnc_AI_sad_logistics = {
 			
 			_thisGroup = _x;
 			if(_forceFlashlights) then {
-				[(units _thisGroup),90] call DDZ_fnc_AI_forceFlashlights;
+				[(units _thisGroup),90] spawn DDZ_fnc_AI_forceFlashlights;
 			};
 			{_x assignAsCargo _vehTrans; _x moveInCargo _vehTrans; } forEach (units _thisGroup);
 
@@ -216,13 +215,14 @@ DDZ_fnc_AI_sad_logistics = {
 			
 			_vehDriver doMove (getWPPos _wp1);
 			(group _vehDriver) setCurrentWaypoint _wp1;
-			_vehDriver disableAI "AUTOCOMBAT";
+			//_vehDriver disableAI "TARGET";
+			_vehDriver disableAI "AUTOTARGET";
 
 			sleep 1;
 			
 			waitUntil 
 			{
-				(!alive _vehTrans) || (!alive (driver _vehTrans)) || ((_vehTrans distance (getMarkerPos _vehSite) < 150) && (speed _vehTrans < 2))
+				(!alive _vehTrans) || (!alive (driver _vehTrans)) || ((_vehTrans distance (getMarkerPos _vehSite) < 150) && (speed _vehTrans < 1))
 			};
 			hint "Vehicle infantry dismounting";
 		}else{
@@ -238,7 +238,8 @@ DDZ_fnc_AI_sad_logistics = {
 			// activate first move for pilot incase something stops 1st wp to be executed somehow
 			_vehDriver doMove (getWPPos _wp1);
 			(group _vehDriver) setCurrentWaypoint _wp1;
-			_vehDriver disableAI "AUTOCOMBAT";
+			//_vehDriver disableAI "TARGET";
+			_vehDriver disableAI "AUTOTARGET";
 			_vehTrans flyInHeight (300 + (((floor random 6) - 3) * 10));
 			sleep 1;
 			
@@ -260,7 +261,7 @@ DDZ_fnc_AI_sad_logistics = {
 				};
 			};
 			
-				
+			doStop _vehDriver;	
 				//Run parajump script
 			{
 				_x spawn DDZ_action_exitIntoChute;
