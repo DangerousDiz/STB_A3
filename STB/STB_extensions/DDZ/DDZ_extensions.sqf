@@ -344,3 +344,136 @@ SHK_DeadCivilianCounter = {
 
 };
 STB_fnc_Intel_DeadCivilianCounter = SHK_DeadCivilianCounter;
+/*
+	SlingParaDrop Eventhandler
+	Allow specific Helicopter sling load to parachute down from height.
+	Params: [Helicopter, [Classnames of slingload para drop objs]] call STB_server_addSlingloadParaDrop_EH;
+	/-- Special --/
+	If the load is a B_supplyCrate_F then a chemlight is attached.
+	-isServer Only-
+	-Global Effect-
+*/
+STB_server_addSlingloadParaDrop_EH = {
+	if(!isServer) exitWith {};
+	_heli = (_this select 0);
+	_slingLoad = if((count _this) > 1)then{(_this select 1)} else {["B_supplyCrate_F","B_CargoNet_01_ammo_F","B_Boat_Transport_01_F"]};
+	//START EH
+	_heli setVariable ["loadTypes", _slingLoad];
+	_heli addEventhandler 
+	[
+		"RopeBreak",
+		{
+			if ((typeOf (_this select 2)) in ((_this select 0) getVariable "loadTypes") ) then 
+			{
+				_this spawn 
+				{
+					sleep (random 1 max 0.1 );
+					
+					if (isServer) then 
+					{
+						_heli = (_this select 0);
+						_rope = (_this select 1);
+						_load = (_this select 2);
+						
+						waitUntil {_load distance _heli >= 30};
+
+						if ((getPosATL _load select 2) > 10) then 
+						{
+							_para = createVehicle ['B_Parachute_02_F', [0,0,0], [], 0, 'FLY'];
+							_para disableCollisionWith _heli;
+							_para setDir (getDir _load);
+							_para setPos (getPos _load);
+							
+							if ( !isNull (attachedTo _load) ) exitWith 
+							{
+								detach _para;
+								deleteVehicle _para;
+							};
+							_load attachTo [_para,[0,0,0]];
+							
+							_nightime = if ((date select 3) < 6 or (date select 3) > 19) then {true} else {false}; 
+							if(((typeOf _load) == "B_supplyCrate_F") && _nightime) then {
+								
+								_light = createVehicle ['Chemlight_green', getPosATL _load, [], 0, 'CAN_COLLIDE'];
+								_light attachTo [_load,[0.65,0,0]];
+							};
+							_smokeColor = ["SmokeShellGreen","F_40mm_White"];
+							switch (side _heli) do {
+								case west : {
+									_smokeColor = ['SmokeShellBlue',"F_40mm_White"];
+								};
+								case east : {
+									_smokeColor = ['SmokeShellWhite',"F_40mm_Red"];
+								};
+								case resistance  : {
+									_smokeColor = ['SmokeShellGreen',"F_40mm_White"];
+								};
+							};
+							
+							0 = [_load, _para,_smokeColor,_heli] spawn 
+							{
+								_thisLoad = _this select 0;
+								_parachute = _this select 1;
+								_smokeColor = ((_this select 2) select 0);
+								_flare = ((_this select 2) select 1);
+								_heli = _this select 3;
+								_nightime = if ((date select 3) < 6 or (date select 3) > 19) then {true} else {false};
+								_flare1 = objNull;
+								_flare2 = objNull;
+								if(_nightime) then {
+									_flare1 = createVehicle [_flare, getPosATL _thisLoad, [], 0, 'CAN_COLLIDE'];
+									_flare1 attachTo [_thisLoad,[0,0,0]];
+								
+								};
+								waitUntil {getPos _thisLoad select 2 < 50};
+								
+								_smoke1 = createVehicle [_smokeColor, getPosATL _thisLoad, [], 0, 'CAN_COLLIDE'];
+								_smoke1 attachTo [_thisLoad,[0,0,0]];
+								_thisLoad allowDamage false;
+								waitUntil {getPos _thisLoad select 2 < 4};
+								_smoke2 = createVehicle [_smokeColor, getPosATL _thisLoad, [], 0, 'CAN_COLLIDE'];
+								_smoke2 attachTo [_thisLoad,[0,0,0]];
+								_vel = velocity _thisLoad;
+								_thisLoad allowDamage false;
+								detach _thisLoad;
+								_thisLoad setVelocity _vel;
+								detach _parachute;
+								_parachute disableCollisionWith _thisLoad;   
+								_time = time + 5;
+								waitUntil {time > _time};
+								detach _smoke1;
+								detach _smoke2;
+								detach _flare1;
+								_thisLoad allowDamage true;
+								if (!isNull _parachute) then {deleteVehicle _parachute};
+							};
+						};
+					};
+				};
+			};
+		}
+	];
+	//END EH
+};
+/*
+	player call DDZ_fnc_JumpMaster;
+*/
+DDZ_fnc_JumpMaster = {
+	_this addAction ["<t color=""#00FF00"">DEPLOY CHUTE", // text
+	{
+		addCamShake [8, 2, 20];
+		_chute = createVehicle ['Steerable_Parachute_F', position player, [], 0, 'FLY'];
+		_chute setPos position player;
+		player moveIndriver _chute;
+		//_chute allowDamage false;
+	
+	
+	}, // script
+	[], // params
+	50, // priority
+	true, // showWindow
+	true, // hideOnUse
+	"",
+	"(((getPos player) select 2) > 30) && ((vehicle player) == player)"];
+};	
+STB_fnc_action_jumpMaster = DDZ_fnc_JumpMaster;
