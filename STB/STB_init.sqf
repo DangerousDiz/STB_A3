@@ -57,10 +57,6 @@ call compile preprocessFileLineNumbers "STB\STB_functions\STB_functions_intel.sq
 if (!STB_NoAI) then {call compile preprocessFileLineNumbers "STB\STB_functions\STB_functions_AI.sqf"};
 // after this point, all STB functions are available to use
 
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-					STB Extensions (all clients)
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-call compile preprocessFileLineNumbers "STB\STB_extensions\STB_extensions_init.sqf";
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 						client specific functions
@@ -78,6 +74,11 @@ if (isServer) then {
 	STB_server_script = [] execVM "STB\STB_server\STB_server_init.sqf";
 	
 };
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+					STB Extensions (all clients)
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+call compile preprocessFileLineNumbers "STB\STB_extensions\STB_extensions_init.sqf";
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				 run TFAR radio frequency initialization (all clients)

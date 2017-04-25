@@ -16,8 +16,12 @@ player spawn STB_fnc_intel_stbCredits;
 _null = [] execVM "briefing.sqf";
 
 // 3CB Scripts
-//_null = ["disabled"] execVM "Scripts\3cb\thirdPersonView.sqf";
-
+	execVM "Scripts\3cb\jipZeus.sqf";
+	execVM "Scripts\3cb\sprayPaint.sqf";
+	execVM "Scripts\3cb\respawn.sqf";
+	execVM "Scripts\3cb\setupEnhancedMovement.sqf";
+	execVM "Scripts\3cb\setupSTHUD.sqf";
+	execVM "Scripts\3cb\accountability.sqf";
 // updating map markers
 player spawn STB_fnc_intel_groupMarkers;
 player spawn STB_fnc_intel_specialMarkers;

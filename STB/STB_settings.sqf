@@ -4,7 +4,7 @@
 
 // General Settings
   
-	
+	//STB_DebugEnabled = true; // STB debug mode
 	// UNCOMMENT FOR THIS OPTION TO APPEAR IN SERVER PARAMS
 	// (must also be changed in description.ext)
 	/*
@@ -46,7 +46,7 @@
 		systemChat format["[STB - Error @ %1]: Missing Params for STB_EnableExtensions - Default values set."];
 	};
 	//STB_DebugEnabled = true; // STB debug mode Overide, uncomment to set Debug Mode on regardless of mission parameters
-	STB_MaxAI = 200; // maximum AI - if ai count is beyond this number, no more units will spawn from the spawn scripts
+	STB_MaxAI = 300; // maximum AI - if ai count is beyond this number, no more units will spawn from the spawn scripts
 	STB_NoAI = false; // only set to true if you do not intend on using AI spawning functions (e.g. for TvT) - saves some memory
 	
 	// Overide to cancel group marking for cTab use

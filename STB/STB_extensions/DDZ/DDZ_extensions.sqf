@@ -102,7 +102,7 @@ DDZ_action_exitIntoChute = {
 		unassignVehicle _JumpingUnit;
 		moveout _JumpingUnit;
 	};
-	sleep 3;
+	sleep 1;
 	if(((getPosATL _JumpingUnit) select 2) > 3) then {
 		_chute = createVehicle ['Steerable_Parachute_F', position _JumpingUnit, [], 0, 'FLY']; 
 		_chute disableCollisionWith _vehTrans;
@@ -143,10 +143,10 @@ STB_action_exitIntoChute = DDZ_action_exitIntoChute;
 		TODO: 	Use Vehicles defined by STB, if no vehicle defined check side of troops and use a default vehicle of that type and side.
 				Check cargo capacity of vehicle and reduce group sizes to fit.
 				Reorganise init array in line with STB_fnc_AI_SpawnAI
-		
+		MISSION EDIT: Made helicopters land and dismount troops instead of parachuting.
 	*/
 DDZ_fnc_AI_sad_logistics = {
-	
+	//[w1_trig, ["spawnMarker"], ["dropMarker"], "vehicleClassname", 5,"allSpawn", ["section",0,"",false,[],false]] spawn DDZ_fnc_AI_sad_logistics;
 	_WaveAdj = 20;
 	_activatedTrigger = _this select 0; //The trigger that is used to gather the list of players to target
 	_spawnMkrs = _this select 1; //An array of Spawn Position Marker names
@@ -160,6 +160,8 @@ DDZ_fnc_AI_sad_logistics = {
 		_extraGroups = if ((count _refGroupArray) > 1) then {_refGroupArray select 1} else {0};
 		_extraGroupType = if ((count _refGroupArray) > 2) then {_refGroupArray select 2} else {""};
 		_forceFlashlights = if ((count _refGroupArray) > 3) then {_refGroupArray select 3} else {false};
+		_setVehicleTextures = if((count _refGroupArray) > 4) then {_refGroupArray select 4} else {[]};
+		_setVehicleOrders = if((count _refGroupArray) > 5) then {_refGroupArray select 5} else {true};
 							
 							
 							
@@ -174,17 +176,31 @@ DDZ_fnc_AI_sad_logistics = {
 		if(_vehicleClass isKindOf "Helicopter") then {
 			_vehTrans = createVehicle [_vehicleClass, [(getMarkerPos (_spawnMkrs select _mkrIndex))select 0, (getMarkerPos (_spawnMkrs select _mkrIndex))select 1, 300],[] , 0, "FLY"];
 			//(units (group _vehTrans)) spawn DDZ_fnc_AI_forceFlashlights;
+			if((count _setVehicleTextures) != 0) then {
+				{
+					_vehTrans setObjectTextureGlobal [_forEachIndex, (_setVehicleTextures select _forEachIndex) ];
+				} forEach _setVehicleTextures;
+			};
 			
 		}else{
 			_vehTrans = createVehicle [_vehicleClass, (getMarkerPos (_spawnMkrs select _mkrIndex)),[] , 0, "NONE"];
+			if((count _setVehicleTextures) != 0) then {
+				{
+					_vehTrans setObjectTextureGlobal [_forEachIndex, (_setVehicleTextures select _forEachIndex) ];
+				} forEach _setVehicleTextures;
+			};
 		};
 		createVehicleCrew _vehTrans;
 		sleep 1;
 		_vehDriver = (driver _vehTrans);
 		_reinfGroups = [];
+		_newRefGroup = [_reinfSideID,"infantry",_mainGroupType,[_reinfSpawnMkr],100,"none",[]] call STB_fnc_AI_spawnAI;
+			_reinfGroups pushback (_newRefGroup select 0);
+			hint (str _reinfGroups);
+		sleep 1;
 		while {(count _reinfGroups) < (_extraGroups + 1)} do {
 			
-			_newRefGroup = [_reinfSideID,"infantry",_mainGroupType,[_reinfSpawnMkr],100,"none",[]] call STB_fnc_AI_spawnAI;
+			_newRefGroup = [_reinfSideID,"infantry",_extraGroupType,[_reinfSpawnMkr],100,"none",[]] call STB_fnc_AI_spawnAI;
 			_reinfGroups pushback (_newRefGroup select 0);
 			hint (str _reinfGroups);
 		};
@@ -209,14 +225,14 @@ DDZ_fnc_AI_sad_logistics = {
 			_wp1 = (group _vehDriver) addWaypoint [(getMarkerPos _vehSite), 1];
 			_wp1 setWaypointType "MOVE";
 			_wp1 setWaypointSpeed "FULL";
-			_wp1 setWaypointBehaviour "AWARE";
+			_wp1 setWaypointBehaviour "SAFE";
 			_wp1 setWaypointStatements ["true", "" ];
 			// activate first move for pilot incase something stops 1st wp to be executed somehow
 			
 			_vehDriver doMove (getWPPos _wp1);
 			(group _vehDriver) setCurrentWaypoint _wp1;
 			//_vehDriver disableAI "TARGET";
-			_vehDriver disableAI "AUTOTARGET";
+			_vehDriver disableAI "AUTOCOMBAT";
 
 			sleep 1;
 			
@@ -230,26 +246,27 @@ DDZ_fnc_AI_sad_logistics = {
 			hint (str _vehSite);
 			_wp1 = (group _vehDriver) addWaypoint [(getMarkerPos _vehSite), 1];
 			_wp1 setWaypointType "MOVE";
-			_wp1 setWaypointSpeed "NORMAL";
-			_wp1 setWaypointBehaviour "SAFE";
-			_wp1 setWaypointStatements ["true", "" ];
+			_wp1 setWaypointBehaviour "CARELESS";
+			_wp1 setWaypointSpeed "FULL";
+			_wp1 setWaypointStatements ["true", "vehicle (thisList select 0) land 'land';" ];
 			
 
 			// activate first move for pilot incase something stops 1st wp to be executed somehow
 			_vehDriver doMove (getWPPos _wp1);
 			(group _vehDriver) setCurrentWaypoint _wp1;
 			//_vehDriver disableAI "TARGET";
-			_vehDriver disableAI "AUTOTARGET";
-			_vehTrans flyInHeight (300 + (((floor random 6) - 3) * 10));
+			_vehDriver disableAI "AUTOCOMBAT";
+			_vehTrans flyInHeight (130 + (((floor random 6) - 3) * 10));
 			sleep 1;
-			
 			waitUntil 
 			{
-				(!alive _vehTrans) || (!alive (driver _vehTrans)) || (_vehTrans distance (getMarkerPos _vehSite) < 500)
+				(!alive _vehTrans) || (!alive (driver _vehTrans)) || ((_vehTrans distance (getMarkerPos _vehSite) < 500) )
 			};
-			hint "heli infantry dismounting";
+			_vehTrans flyInHeight 50;
+			hint "heli infantry dismounting";	
+			//_vehTrans land "land";
 		};
-		
+		waitUntil {isTouchingGround _vehTrans};
 		
 		sleep 0.2;
 		{
@@ -270,7 +287,7 @@ DDZ_fnc_AI_sad_logistics = {
 			} forEach (units _thisGroup);
 			_playerTarget = _activatedTrigger call DDZ_fnc_ancillary_findPlayer;
 			if((count _playerTarget) == 3 ) then {
-				if(_playerTarget distance (leader _thisGroup) < 1000) then {
+				if(_playerTarget distance (leader _thisGroup) < 2000) then {
 					[_thisGroup,[_playerTarget, 50,['patrol250','self']]] spawn STB_fnc_AI_sad;
 				}else {
 					[_thisGroup,['self', 250]] spawn STB_fnc_AI_patrol;
@@ -282,14 +299,23 @@ DDZ_fnc_AI_sad_logistics = {
 			sleep 5;
 		} forEach _reinfGroups;
 		sleep 10;
-		_wp2 = (group _vehDriver) addWaypoint [(getMarkerPos (_spawnMkrs select _mkrIndex)), 50];
-		_wp2 setWaypointType "MOVE";
-		_wp2 setWaypointSpeed "FULL";
-		_wp2 setWaypointBehaviour "SAFE";
-		_wp2 setWaypointStatements ["true","thisList spawn {sleep 120; {if(!(vehicle _x == _x))then { deleteVehicle (vehicle _x); deleteVehicle _x; }else {deleteVehicle _x;}} forEach _this;};"];
-		_vehDriver doMove (getWPPos _wp2);
-		sleep 5;
-		_vehTrans flyInHeight (150 + (((floor random 6) - 3) * 10));
+		if(_setVehicleOrders) then {
+			_wp2 = (group _vehDriver) addWaypoint [(getMarkerPos (_spawnMkrs select _mkrIndex)), 50];
+			_wp2 setWaypointType "MOVE";
+			_wp2 setWaypointSpeed "FULL";
+			_wp2 setWaypointBehaviour "CARELESS";
+			_wp2 setWaypointStatements ["true","thisList spawn {sleep 120; {if(!(vehicle _x == _x))then { deleteVehicle (vehicle _x); deleteVehicle _x; }else {deleteVehicle _x;}} forEach _this;};"];
+			_vehDriver doMove (getWPPos _wp2);
+			sleep 5;
+			_vehTrans flyInHeight (150 + (((floor random 6) - 3) * 10));
+		} else {
+			_vehDriver enableAI "AUTOCOMBAT";
+			_playerTarget = _activatedTrigger call DDZ_fnc_ancillary_findPlayer;
+			_vehDriver doMove _playerTarget;
+			[(group _vehDriver),[_playerTarget, 0,["patrol250","self"]]] spawn STB_fnc_AI_sad;
+		
+		
+		};
 	};
 };
 STB_fnc_AI_sad_logistics = DDZ_fnc_AI_sad_logistics;
@@ -344,26 +370,18 @@ SHK_DeadCivilianCounter = {
 
 };
 STB_fnc_Intel_DeadCivilianCounter = SHK_DeadCivilianCounter;
-/*
-	SlingParaDrop Eventhandler
-	Allow specific Helicopter sling load to parachute down from height.
-	Params: [Helicopter, [Classnames of slingload para drop objs]] call STB_server_addSlingloadParaDrop_EH;
-	/-- Special --/
-	If the load is a B_supplyCrate_F then a chemlight is attached.
-	-isServer Only-
-	-Global Effect-
-*/
+
 STB_server_addSlingloadParaDrop_EH = {
 	if(!isServer) exitWith {};
 	_heli = (_this select 0);
-	_slingLoad = if((count _this) > 1)then{(_this select 1)} else {["B_supplyCrate_F","B_CargoNet_01_ammo_F","B_Boat_Transport_01_F"]};
+	_slingLoad = if((count _this) > 1)then{(_this select 1)} else {[]};
 	//START EH
 	_heli setVariable ["loadTypes", _slingLoad];
 	_heli addEventhandler 
 	[
 		"RopeBreak",
 		{
-			if ((typeOf (_this select 2)) in ((_this select 0) getVariable "loadTypes") ) then 
+			if (((typeOf (_this select 2)) in ((_this select 0) getVariable "loadTypes")) || (count ((_this select 0) getVariable "loadTypes") == 0)) then 
 			{
 				_this spawn 
 				{
@@ -438,6 +456,7 @@ STB_server_addSlingloadParaDrop_EH = {
 								detach _thisLoad;
 								_thisLoad setVelocity _vel;
 								detach _parachute;
+								_thisLoad setVectorUp (surfaceNormal (getPosATL _thisLoad));
 								_parachute disableCollisionWith _thisLoad;   
 								_time = time + 5;
 								waitUntil {time > _time};
@@ -463,6 +482,7 @@ DDZ_fnc_JumpMaster = {
 	{
 		addCamShake [8, 2, 20];
 		_chute = createVehicle ['Steerable_Parachute_F', position player, [], 0, 'FLY'];
+		_chute disableCollisionWith player; 
 		_chute setPos position player;
 		player moveIndriver _chute;
 		//_chute allowDamage false;

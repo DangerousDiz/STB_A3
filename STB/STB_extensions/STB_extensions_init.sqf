@@ -39,9 +39,12 @@ if(!STB_EnableExtensions) exitWith {systemchat format["[STB_Extensions: EXIT @ %
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 					DDZ Extentions functions (all clients)
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+//DangerousDiz extensions
 call compile preprocessFileLineNumbers "STB\STB_extensions\DDZ\DDZ_extensions.sqf";
 call compile preprocessFileLineNumbers "STB\STB_extensions\DDZ\DDZ_AI_definitions.sqf";
-
+//Bluemaxx extensions
+call compile preprocessFileLineNumbers "STB\STB_extensions\BMXX\BMXX_extensions.sqf";
 
 
 

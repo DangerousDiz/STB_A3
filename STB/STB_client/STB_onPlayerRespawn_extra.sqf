@@ -10,7 +10,17 @@
 	
 	_this is the player unit who is respawning
 */
-/*
-execVM "Scripts\3cb\medicalFix.sqf";
-execVM "Scripts\3cb\Ctab.sqf";
-*/
+
+UN_w1_commander addAction [
+		"<t color=""#B2ED5A"">" + "Confirm area secure", // text
+		{UN_ref_send = true; publicvariable "UN_ref_send";}, // script
+		[], // params
+		10, // priority
+		true, // showWindow
+		true, // hideOnUse
+		"",
+		"player in ['UK3CB_BAF_FAC_MTP_RM', 'UK3CB_BAF_RO_MTP_RM', 'UK3CB_BAF_FAC_MTP_RM_H', 'UK3CB_BAF_RO_MTP_RM_H', 'UK3CB_BAF_Officer_MTP_RM', 'UK3CB_BAF_Officer_MTP_RM_H'] && w1_done" // params
+	
+		
+		
+	];

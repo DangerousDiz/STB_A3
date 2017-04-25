@@ -554,7 +554,7 @@ STB_fnc_AI_move =
 			[target (obj/marker/pos), radius (number), [optional] go slow? (boolean), [optional] patrol afterward? (boolean)]
 		//DDZ EDIT: Replaced optional patrol afterward? boolean with NextOrders system. Using the _doAfter optional param [typeOfOrder (string),nextOrderMkr (string - "markername")]
 			[target (obj/marker/pos), radius (number), [required if setting NextOrders] go slow? (boolean), [optional] NextOrders params (array) [typeOfOrder (string),nextOrderMkr (string - "markername"),[optional nested] NextOrders params (array) [typeOfOrder (string),nextOrderMkr (string - "markername")]]
-			See line 583 + for string type options.
+			See line 593 + for string type options.
 			Added: option to chain NextOrders together to create mulitple orders in a single spawn of the function.
 				All NextOrders are compatible with call or spawn with options utilising sleep wrapped in spawn code block.
 				NextOrders can be extended by adding a new entry to the switch do case.
@@ -995,3 +995,6 @@ STB_fnc_AI_forceFlashlights =
 
 // Define AI
 call compile preprocessFileLineNumbers "STB\STB_definitions\STB_AI_definitions.sqf";
+if(STB_DebugEnabled) then {
+	systemchat format ["STB_Debug (%1) - Default definitions loaded %2 types", time, count STB_Infantry];
+};
